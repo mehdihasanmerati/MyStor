@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MyStor.Core.Contracts\MyStor.Core.Contracts.csproj" />
+    <ProjectReference Include="..\MyStor.Core.Domain\MyStor.Core.Domain.csproj" />
+    <ProjectReference Include="..\MyStor.Infrastructures.DAL\MyStor.Infrastructures.DAL.csproj" />
+    <ProjectReference Include="..\MyStor.Services.ApplicationServices\MyStor.Services.ApplicationServices.csproj" />
+  </ItemGroup>
+
+</Project>
