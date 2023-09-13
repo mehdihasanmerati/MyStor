@@ -1,4 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using MyStor.Core.Contracts.Products;
+using MyStor.Infrastructures.DAL.Commons;
 using MyStor.Infrastructures.DAL.Products;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,7 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddMvc();
-builder.Services.AddScoped<ProductRepository, FakeProductRepository > ();
+builder.Services.AddScoped<ProductRepository, EfProductRepository > ();
+builder.Services.AddDbContext<MystorContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("storeDb")));
 var app = builder.Build();
 
 
