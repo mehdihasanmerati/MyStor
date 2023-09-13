@@ -1,9 +1,14 @@
+using MyStor.Core.Contracts.Products;
+using MyStor.Infrastructures.DAL.Products;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddMvc();
+builder.Services.AddScoped<ProductRepository, FakeProductRepository > ();
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -18,11 +23,10 @@ app.UseStaticFiles();
 app.UseDeveloperExceptionPage();
 app.UseStatusCodePages();
 app.UseRouting();
-
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Product}/{action=List}/{id?}");
 
 app.Run();
