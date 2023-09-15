@@ -29,7 +29,11 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllerRoute(
-    name: "default",
+    name: "default1",
+    pattern:"Page{pageNumber:int}",
+    defaults: new { controller = "Product", action="List", productPage=1});
+app.MapControllerRoute(
+    name: "default2",
     pattern: "{controller=Product}/{action=List}/{id?}");
 
 app.Run();

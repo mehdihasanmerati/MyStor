@@ -18,11 +18,14 @@ namespace MyStor.Infrastructures.DAL.Products
         {
             this.ctx = ctx;
         }
-        public List<Product> GetProducts()
+        public List<Product> GetProducts(int pageSize = 4, int pageNumber = 1)
         {
-#pragma warning disable CS8604 // Possible null reference argument.
-            return ctx.Products.Include(c => c.Category).ToList();
-#pragma warning restore CS8604 // Possible null reference argument.
+            return ctx.Products.Include(c => c.Category).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
+        }
+
+        public int TotalCount()
+        {
+            return ctx.Products.Count();
         }
     }
 }

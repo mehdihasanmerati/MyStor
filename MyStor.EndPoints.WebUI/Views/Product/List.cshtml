@@ -1,10 +1,8 @@
-﻿@model List<Product>
-
-
+﻿@model ProductListViewModel
 
 
 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-    @foreach (var item in Model)
+    @foreach (var item in Model.Products)
     {
         <div class="col mb-5">
             <div class="card h-100">
@@ -14,19 +12,30 @@
             <div class="card-body p-4">
                     <div class="text-center">
                         <!-- Product name-->
-                    <h5 class="fw-bolder">@item.Name</h5>
-                        <!-- Product price-->
-                    @item.Price.ToString("c")
+                        <h5 class="fw-bolder">@item.Name</h5>
+                            <!-- Product price-->
+                        @item.Price.ToString("c")
+                         <p class="card-text">@item.Description</p>
                     </div>
-                </div>
-                <!-- Product actions-->
-            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View options</a></div>
                 </div>
             </div>
         </div>
     }
 </div>
+
+@*<div class="btn-group pull-right m-1">
+    @for (var i = 1; i <= Model.PagingInfo.TotalPages; i++)
+    {
+        var className = i == Model.PagingInfo.CurrentPage ? "btn-primary" : "btn-secondary";
+        <a asp-controller="Product" asp-action="List" asp-route-pageNumber="@i" class="btn @className">@i</a>
+    }
+</div>*@
+
+<div page-model="@Model.PagingInfo" page-action="List" page-classes-enabled="true" page-class="btn" 
+ page-class-normal="btn-secondary" page-class-selected="btn-primary" class="btn-group pull-right m-1">
+</div>
+
+
 
 
 

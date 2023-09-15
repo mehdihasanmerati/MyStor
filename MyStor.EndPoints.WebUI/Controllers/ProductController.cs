@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyStor.Core.Contracts.Products;
+using MyStor.EndPoints.WebUI.Models.Products;
 
 namespace MyStor.EndPoints.WebUI.Controllers
 {
@@ -11,10 +12,19 @@ namespace MyStor.EndPoints.WebUI.Controllers
         {
             this.productRepository = productRepository;
         }
-        public IActionResult List()
+        public IActionResult List(int pageNumber = 1)
         {
-            var product = productRepository.GetProducts();
-            return View(product);
+            var model = new ProductListViewModel
+            {
+                Products = productRepository.GetProducts(2,pageNumber),
+                PagingInfo = new Models.Common.PagingInfo
+                {
+                    CurrentPage = pageNumber,
+                    ItemsPerPage = 2,
+                    TotalItems = productRepository.TotalCount()
+                }
+            };
+            return View(model);
         }
     }
 }

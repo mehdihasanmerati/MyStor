@@ -9,6 +9,7 @@ namespace MyStor.Core.Contracts.Products
 {
     public interface ProductRepository
     {
-        List<Product> GetProducts();
+        int TotalCount();
+        List<Product> GetProducts(int pageSize = 4, int pageNumber = 1);
     }
 }
