@@ -18,14 +18,15 @@ namespace MyStor.Infrastructures.DAL.Products
         {
             this.ctx = ctx;
         }
-        public List<Product> GetProducts(int pageSize = 4, int pageNumber = 1)
+        public List<Product> GetProducts(string category, int pageSize = 4, int pageNumber = 1)
         {
-            return ctx.Products.Include(c => c.Category).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
+            return ctx.Products.Where(c => string.IsNullOrWhiteSpace(category) || c.Category.CategoryName == category)
+                               .Include(c => c.Category).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
         }
 
-        public int TotalCount()
+        public int TotalCount(string category)
         {
-            return ctx.Products.Count();
+            return ctx.Products.Count(c => string.IsNullOrWhiteSpace(category) || c.Category.CategoryName == category);
         }
     }
 }

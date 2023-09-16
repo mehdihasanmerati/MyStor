@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using MyStor.Core.Contracts.Categories;
 using MyStor.Core.Contracts.Products;
+using MyStor.Infrastructures.DAL.Categories;
 using MyStor.Infrastructures.DAL.Commons;
 using MyStor.Infrastructures.DAL.Products;
 
@@ -9,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddMvc();
 builder.Services.AddScoped<ProductRepository, EfProductRepository > ();
+builder.Services.AddScoped<CategoryRepository, EfCategoryRepository>();
 builder.Services.AddDbContext<MystorContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("storeDb")));
 var app = builder.Build();
 
@@ -30,10 +33,25 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default1",
-    pattern:"Page{pageNumber:int}",
-    defaults: new { controller = "Product", action="List", productPage=1});
+    pattern: "{category}/Page{pageNumber:int}",
+    defaults: new { controller = "Product", action = "List"});
+
 app.MapControllerRoute(
     name: "default2",
-    pattern: "{controller=Product}/{action=List}/{id?}");
+    pattern:"Page{pageNumber:int}",
+    defaults: new { controller = "Product", action="List", productPage = 1 });
 
+app.MapControllerRoute(
+    name: "default3",
+    pattern: "{category}",
+    defaults: new { controller = "Product", action = "List", productPage = 1 });
+
+app.MapControllerRoute(
+    name: "default4",
+    pattern: "",
+    defaults: new { controller = "Product", action = "List", productPage = 1 });
+
+app.MapControllerRoute(
+    name: "default5",
+    pattern: "{controller=Product}/{action=List}/{id?}");
 app.Run();

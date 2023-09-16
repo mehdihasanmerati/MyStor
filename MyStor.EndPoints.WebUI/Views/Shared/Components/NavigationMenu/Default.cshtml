@@ -1,0 +1,14 @@
+﻿@model NavigationMenuViewModel
+
+<div class="list-group w-25 m-3">
+    @foreach (var item in Model.Categories)
+    {
+        var className = item.CategoryName == Model.CurrentCategory ? "text-danger" : "";
+        <a asp-controller="Product" asp-action="List" asp-route-category="@item.CategoryName" asp-route-pageNumber="1"
+        class="list-group-item list-group-item-action flex-column align-items-start className">
+            <div class="d-flex w-100 justify-content-between ">
+                <h5 class="mb-1">@item.CategoryName</h5>
+            </div>
+        </a>
+    }
+</div>

@@ -12,17 +12,18 @@ namespace MyStor.EndPoints.WebUI.Controllers
         {
             this.productRepository = productRepository;
         }
-        public IActionResult List(int pageNumber = 1)
+        public IActionResult List(string category ,int pageNumber = 1)
         {
             var model = new ProductListViewModel
             {
-                Products = productRepository.GetProducts(2,pageNumber),
+                Products = productRepository.GetProducts(category,2,pageNumber),
                 PagingInfo = new Models.Common.PagingInfo
                 {
                     CurrentPage = pageNumber,
                     ItemsPerPage = 2,
-                    TotalItems = productRepository.TotalCount()
-                }
+                    TotalItems = productRepository.TotalCount(category)
+                },
+                CurrentCategory = category
             };
             return View(model);
         }
