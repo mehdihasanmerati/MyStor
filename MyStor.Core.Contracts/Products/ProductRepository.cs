@@ -10,6 +10,7 @@ namespace MyStor.Core.Contracts.Products
     public interface ProductRepository
     {
         int TotalCount(string category);
+        Product Find(int productId);
         List<Product> GetProducts(string category, int pageSize = 4, int pageNumber = 1);
     }
 }

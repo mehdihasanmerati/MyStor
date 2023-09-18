@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using MyStor.Core.Contracts.Categories;
 using MyStor.Core.Contracts.Products;
+using MyStor.EndPoints.WebUI.Models.Carts;
 using MyStor.Infrastructures.DAL.Categories;
 using MyStor.Infrastructures.DAL.Commons;
 using MyStor.Infrastructures.DAL.Products;
@@ -10,6 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddMvc();
+builder.Services.AddMemoryCache();
+builder.Services.AddSession();
+builder.Services.AddScoped(sr => SessionCart.GetCart(sr));
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<ProductRepository, EfProductRepository > ();
 builder.Services.AddScoped<CategoryRepository, EfCategoryRepository>();
 builder.Services.AddDbContext<MystorContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("storeDb")));
@@ -30,7 +35,7 @@ app.UseDeveloperExceptionPage();
 app.UseStatusCodePages();
 app.UseRouting();
 app.UseAuthorization();
-
+app.UseSession();
 app.MapControllerRoute(
     name: "default1",
     pattern: "{category}/Page{pageNumber:int}",
