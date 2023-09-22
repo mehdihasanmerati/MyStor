@@ -1,0 +1,26 @@
+﻿@model Cart
+
+
+
+<form class="d-flex" class="btn btn-sm btn-secondary navbar-btn" asp-controller="Cart" asp-action="Index"
+      asp-route-returnUrl="@ViewContext.HttpContext.Request.PathAndQuery()">
+    <button class="btn btn-outline-dark" type="submit">
+        <i class="bi-cart-fill me-1"></i>
+        Cart
+
+            @if (Model.Lines.Count() > 0)
+            {
+                <span class="badge bg-dark text-white ms-1 rounded-pill">
+                    @Model.Lines.Sum(x => x.Quantity) item(s)
+                    :
+                    @Model.ComputeTotalValue().ToString("c")
+               </span>
+            }
+        
+    </button>
+</form>
+
+
+
+
+

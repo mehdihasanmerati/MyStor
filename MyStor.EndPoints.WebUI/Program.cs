@@ -1,10 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using MyStor.Core.Contracts.Categories;
+using MyStor.Core.Contracts.Orders;
+using MyStor.Core.Contracts.Payments;
 using MyStor.Core.Contracts.Products;
 using MyStor.EndPoints.WebUI.Models.Carts;
 using MyStor.Infrastructures.DAL.Categories;
 using MyStor.Infrastructures.DAL.Commons;
+using MyStor.Infrastructures.DAL.Orders;
 using MyStor.Infrastructures.DAL.Products;
+using MyStor.Services.ApplicationServices.Payments;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +21,8 @@ builder.Services.AddScoped(sr => SessionCart.GetCart(sr));
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<ProductRepository, EfProductRepository > ();
 builder.Services.AddScoped<CategoryRepository, EfCategoryRepository>();
+builder.Services.AddScoped<OrderRepository, EfOrderRepository> ();
+builder.Services.AddScoped<PaymentService, PayIrPaymentServices>();
 builder.Services.AddDbContext<MystorContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("storeDb")));
 var app = builder.Build();
 
