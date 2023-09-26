@@ -12,5 +12,6 @@ namespace MyStor.Core.Contracts.Products
         int TotalCount(string category);
         Product Find(int productId);
         List<Product> GetProducts(string category, int pageSize = 4, int pageNumber = 1);
+        void Add(Product product);
     }
 }

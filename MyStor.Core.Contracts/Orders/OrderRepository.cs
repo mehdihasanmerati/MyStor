@@ -13,5 +13,8 @@ namespace MyStor.Core.Contracts.Orders
         Order Find(int id);
         void SetTransactionId(int orderId, string token);
         void SetPaymentDone(string factorNumber);
+        List<OrderHeader> Search(bool? shiped);
+        void Ship(int orderId);
+
     }
 }

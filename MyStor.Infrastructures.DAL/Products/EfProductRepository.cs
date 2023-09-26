@@ -19,6 +19,12 @@ namespace MyStor.Infrastructures.DAL.Products
             this.ctx = ctx;
         }
 
+        public void Add(Product product)
+        {
+           ctx?.Products?.Add(product);
+           ctx?.SaveChanges();
+        }
+
         public Product Find(int productId)
         {
             return ctx.Products.Find(productId);

@@ -42,7 +42,7 @@ namespace MyStor.EndPoints.WebUI.Controllers
                     return View("PaymentComplete", verifyResult);
                 }
             }
-            return View("PaymentError", result);
+            return View(result);
         }
     }
 }

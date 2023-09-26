@@ -34,6 +34,24 @@ namespace MyStor.Infrastructures.DAL.Orders
             ctx.SaveChanges();  
         }
 
+        public List<OrderHeader> Search(bool? Shipped)
+        {
+            var orders = ctx.Orders.Where(o => !Shipped.HasValue || o.Shipped == Shipped.Value).
+                Select(o => new OrderHeader
+                {
+                    City = o.City,
+                    State = o.State,
+                    Shipped = o.Shipped,
+                    Line1 = o.Line1,
+                    Name = o.Name,
+                    OrderID = o.OrderId,
+                    PaymentId = o.PaymentId,
+                    TotalPrice = o.lines.Sum(d => d.Product.Price),
+                    PaymentDate = o.PaymentDate,
+                }).ToList();
+            return orders;
+        }
+
         public void SetPaymentDone(string factorNumber)
         {
            var order = ctx.Orders.Find(int.Parse(factorNumber));
@@ -50,6 +68,16 @@ namespace MyStor.Infrastructures.DAL.Orders
             if (order != null)
             {
                 order.PaymentId = token;
+                ctx.SaveChanges();
+            }
+        }
+
+        public void Ship(int orderId)
+        {
+            var order = ctx.Orders.Find(orderId);
+            if (order != null)
+            {
+                order.Shipped = true;
                 ctx.SaveChanges();
             }
         }
